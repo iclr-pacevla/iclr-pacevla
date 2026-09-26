@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="description"
@@ -7,21 +7,14 @@
   <meta name="keywords" content="Robotics">
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
   <title>PaceVLA: Adaptive Temporal Action Quantization in Vision-Language-Action Models</title>
 
   <link rel="stylesheet" href="./static/css/fonts.css">
-
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
-  <script src="./static/js/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script defer src="./static/js/index.js"></script>
 </head>
 <body>
 
@@ -32,7 +25,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">
-            <span class="method-name">PaceVLA</span>: Adaptive Temporal Action Quantization in Vision-Language-Action Models
+            <span class="method-name">PaceVLA</span>: Adaptive Temporal Action Quantization<br class="title-break">in Vision-Language-Action Models
           </h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">Anonymous Authors</span>
@@ -43,9 +36,9 @@
 
           <div class="tldr">
             <p>
-              <strong>TL;DR:</strong> PaceVLA lets a Vision-Language-Action policy decide, at every inference step,
-              how coarsely and how far ahead to act &mdash; executing tasks faster than the teleoperated demonstrations
-              it was trained on, while maintaining task success.
+              <strong>TL;DR:</strong> PaceVLA lets a Vision-Language-Action policy choose how coarsely and how far
+              ahead to act at every inference step, executing tasks faster than the teleoperated demonstrations
+              it was trained on while maintaining task success.
             </p>
           </div>
         </div>
@@ -57,14 +50,16 @@
 
 <section class="section overview-section">
   <div class="container is-max-desktop">
-    <div class="placeholder-box is-overview">Overview figure placeholder</div>
+    <div class="overview-image">
+      <img src="./static/images/teaser.png"
+           alt="Adaptive temporal execution with PaceVLA: accelerated execution on the real-robot conveyor task, and the speed-accuracy trade-off across acceleration methods.">
+    </div>
   </div>
 </section>
 
 
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
@@ -80,7 +75,7 @@
             applying action quantization without considering when fine-grained control is required
             introduces a speed&ndash;accuracy trade-off: accelerated actions may efficiently
             reduce redundant steps in some phases, while discarding critical motion details
-            in precision-sensitive interactions. To address this, we propose <span class="method-name">PaceVLA</span>,
+            in precision-sensitive interactions. To address this, we propose <strong><span class="method-name">PaceVLA</span></strong>,
             a unified framework for adaptive temporal execution in VLAs that integrates two
             coupled components: (1) mode-specific action decoders built on a shared action expert,
             supporting multiple temporal granularities and prediction horizons,
@@ -94,7 +89,6 @@
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
   </div>
 </section>
 
@@ -113,8 +107,8 @@
             temporally coarser commands that cover the same motion in fewer steps.
           </p>
           <p>
-            At each inference step, a <strong>quantization judge</strong> &mdash; supervised with per-step
-            quantizability scores distilled from task execution outcomes and a large vision-language model &mdash;
+            At each inference step, a <strong>quantization judge</strong>, supervised with per-step
+            quantizability scores distilled from task execution outcomes and a large vision-language model,
             decides whether the current phase tolerates coarse execution, and a
             <strong>context-conditioned router</strong> selects an execution mode within the chosen group from the
             visual and language context. The policy thereby commits to long, coarse actions during free-space
@@ -122,7 +116,10 @@
             grasping and contact-rich interaction, adding only marginal inference overhead (1.05&times;).
           </p>
         </div>
-        <div class="placeholder-box is-method">Method figure placeholder</div>
+        <div class="method-image">
+          <img src="./static/images/method.png"
+               alt="Overview of PaceVLA: a shared action expert with mode-specific decoders, a quantization judge, a horizon selector, and a router selecting the execution mode.">
+        </div>
       </div>
     </div>
   </div>
@@ -134,19 +131,66 @@
     <h2 class="title is-3 has-text-centered">Real-Robot Results</h2>
     <p class="results-intro has-text-centered">
       Side-by-side rollouts of the base VLA (GR00T N1.5) and GR00T N1.5 + <span class="method-name">PaceVLA</span> (Ours)
-      across three embodiments.
+      across three embodiments.<br>
+      <strong><em>All videos play at 1&times; (real time).</em></strong>
     </p>
 
-    <h3 class="platform-header">Platform I &mdash; Franka Research 3 + Robotiq Gripper</h3>
+    <h3 class="platform-header">Platform I &mdash; ALLEX Humanoid + 15-DoF Dexterous Hands</h3>
 
     <div class="task-card">
       <div class="task-header">
         <span class="task-badge">Task A</span>
+        <span class="task-name">Conveyor Package Handling (Long-horizon)</span>
+      </div>
+      <div class="task-instruction">
+        <span class="instruction-label">Instruction</span>
+        <span class="instruction-text">"Bring the package over, orient barcode up, then place it on the conveyor."</span>
+      </div>
+      <div class="task-videos">
+        <div class="video-block">
+          <video src="./static/videos/allex/conveyor_base.mp4" muted playsinline loop preload="metadata" controls></video>
+          <p class="video-caption base">GR00T N1.5 (Base) &mdash; 3.6 packages/min</p>
+        </div>
+        <div class="video-block">
+          <video src="./static/videos/allex/conveyor_ours.mp4" muted playsinline loop preload="metadata" controls></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours) &mdash; 6.3 packages/min</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="platform-header">Platform II &mdash; Bimanual OpenArm + 6-DoF Dexterous Hands</h3>
+
+    <div class="task-card">
+      <div class="task-header">
+        <span class="task-badge">Task B</span>
+        <span class="task-name">Table Sweeping (Bimanual)</span>
+      </div>
+      <div class="task-instruction">
+        <span class="instruction-label">Instruction</span>
+        <span class="instruction-text">"Hold the dustpan with the left hand and sweep the debris into it with the brush in the right hand."</span>
+      </div>
+      <div class="task-videos">
+        <div class="video-block">
+          <video src="./static/videos/openarm/sweep_base.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption base">GR00T N1.5 (Base)</p>
+        </div>
+        <div class="video-block">
+          <video src="./static/videos/openarm/sweep_ours.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="platform-header">Platform III &mdash; Franka Research 3 + Robotiq Gripper</h3>
+
+    <div class="task-card">
+      <div class="task-header">
+        <span class="task-badge">Task C</span>
         <span class="task-name">Pick-and-Place</span>
       </div>
       <div class="task-instruction">
         <span class="instruction-label">Instruction</span>
-        <span class="instruction-text" id="pnp-instruction">"Pick up the doll and put it into the plate."</span>
+        <span class="instruction-text">"Pick up the doll and put it into the plate."</span>
       </div>
       <div class="task-variant">
         <span class="variant-label">Object</span>
@@ -179,7 +223,7 @@
 
     <div class="task-card">
       <div class="task-header">
-        <span class="task-badge">Task B</span>
+        <span class="task-badge">Task D</span>
         <span class="task-name">Air Fryer (Long-horizon)</span>
       </div>
       <div class="task-instruction">
@@ -200,7 +244,7 @@
 
     <div class="task-card">
       <div class="task-header">
-        <span class="task-badge">Task C</span>
+        <span class="task-badge">Task E</span>
         <span class="task-name">Stack Cup (Long-horizon)</span>
       </div>
       <div class="task-instruction">
@@ -219,51 +263,6 @@
       </div>
     </div>
 
-    <h3 class="platform-header">Platform II &mdash; Bimanual OpenArm + 6-DoF Dexterous Hands</h3>
-
-    <div class="task-card">
-      <div class="task-header">
-        <span class="task-badge">Task D</span>
-        <span class="task-name">Table Sweeping (Bimanual)</span>
-      </div>
-      <div class="task-instruction">
-        <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"Hold the dustpan with the left hand and sweep the debris into it with the brush in the right hand."</span>
-      </div>
-      <div class="task-videos">
-        <div class="video-block">
-          <video src="./static/videos/openarm/sweep_base.mp4" muted playsinline loop preload="metadata"></video>
-          <p class="video-caption base">GR00T N1.5 (Base)</p>
-        </div>
-        <div class="video-block">
-          <video src="./static/videos/openarm/sweep_ours.mp4" muted playsinline loop preload="metadata"></video>
-          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="platform-header">Platform III &mdash; ALLEX Humanoid + 15-DoF Dexterous Hands</h3>
-
-    <div class="task-card">
-      <div class="task-header">
-        <span class="task-badge">Task E</span>
-        <span class="task-name">Conveyor Package Handling (Long-horizon)</span>
-      </div>
-      <div class="task-instruction">
-        <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"Bring the package over, orient barcode up, then place it on the conveyor."</span>
-      </div>
-      <div class="task-videos">
-        <div class="video-block">
-          <video src="./static/videos/allex/conveyor_base.mp4" muted playsinline loop preload="metadata" controls></video>
-          <p class="video-caption base">GR00T N1.5 (Base) &mdash; 3.6 packages/min</p>
-        </div>
-        <div class="video-block">
-          <video src="./static/videos/allex/conveyor_ours.mp4" muted playsinline loop preload="metadata" controls></video>
-          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours) &mdash; 6.3 packages/min</p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 

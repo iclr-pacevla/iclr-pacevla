@@ -2,183 +2,28 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
-
-.footer .icon-link {
-    font-size: 25px;
-    color: #000;
-}
-
-.link-block a {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.dnerf {
-  font-variant: small-caps;
-}
-
-
-.teaser .hero-body {
-  padding-top: 0;
-  padding-bottom: 3rem;
-}
-
-.teaser {
+.publication-title {
   font-family: 'Google Sans', sans-serif;
 }
 
-
-.publication-title {
-}
-
-.publication-banner {
-  max-height: parent;
-
-}
-
-.publication-banner video {
-  position: relative;
-  left: auto;
-  top: auto;
-  transform: none;
-  object-fit: fit;
-}
-
-.publication-header .hero-body {
-}
-
-.publication-title {
-    font-family: 'Google Sans', sans-serif;
-}
-
 .publication-authors {
-    font-family: 'Google Sans', sans-serif;
-}
-
-.publication-venue {
-    color: #555;
-    width: fit-content;
-    font-weight: bold;
-}
-
-.publication-awards {
-    color: #ff3860;
-    width: fit-content;
-    font-weight: bolder;
-}
-
-.publication-authors {
-}
-
-.publication-authors a {
-   color: hsl(204, 86%, 53%) !important;
-}
-
-.publication-authors a:hover {
-    text-decoration: underline;
+  font-family: 'Google Sans', sans-serif;
 }
 
 .author-block {
   display: inline-block;
 }
 
-.publication-banner img {
+.hero .publication-title {
+  font-size: 2.3rem;
+  line-height: 1.25;
 }
 
-.publication-authors {
-  /*color: #4286f4;*/
-}
-
-.publication-video {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%;
-
-    overflow: hidden;
-    border-radius: 10px !important;
-}
-
-.publication-video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.publication-body img {
-}
-
-.results-carousel {
-  overflow: hidden;
-}
-
-.results-carousel .item {
-  margin: 5px;
-  overflow: hidden;
-  border: 1px solid #bbb;
-  border-radius: 10px;
-  padding: 0;
-  font-size: 0;
-}
-
-.results-carousel video {
-  margin: 0;
-}
-
-
-.interpolation-panel {
-  background: #f5f5f5;
-  border-radius: 10px;
-}
-
-.interpolation-panel .interpolation-image {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.interpolation-video-column {
-}
-
-.interpolation-panel .slider {
-  margin: 0 !important;
-}
-
-.interpolation-panel .slider {
-  margin: 0 !important;
-}
-
-#interpolation-image-wrapper {
-  width: 100%;
-}
-#interpolation-image-wrapper img {
-  border-radius: 5px;
-}
-
-
-/* Venue */
-.publication-venue-line {
-  margin-top: 0.85rem;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.venue-badge {
-  font-family: 'Google Sans', sans-serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: #5b3fa0;
+.hero .publication-title .method-name {
+  font-variant: small-caps;
   letter-spacing: 0.01em;
 }
 
-/* Spacing between the venue line and the link buttons */
-.publication-venue-line + .column {
-  padding-top: 0.85rem;
-  padding-bottom: 0;
-}
-
-/* TL;DR */
 .tldr {
   margin-top: 1.25rem;
   padding: 1rem 1.5rem;
@@ -194,7 +39,6 @@ body {
   color: #4a3286;
 }
 
-/* Overview / Method images */
 .overview-section {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -218,7 +62,6 @@ body {
   margin: 0 auto;
 }
 
-/* Results — task cards */
 .results-intro {
   margin-bottom: 2.5rem;
   color: #555;
@@ -382,12 +225,22 @@ body {
   text-align: center;
 }
 
-.video-caption.fail {
-  color: #c0392b;
+.video-caption.base {
+  color: #6b6b76;
 }
 
-.video-caption.success {
-  color: #2e7d32;
+.video-caption.ours {
+  color: #5b3fa0;
+}
+
+@media (max-width: 900px) {
+  .hero .publication-title {
+    font-size: 1.7rem;
+  }
+
+  .title-break {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -401,51 +254,4 @@ body {
     align-items: flex-start;
     gap: 0.5rem;
   }
-}
-
-/* Visitor counter */
-.hits-badge {
-  text-align: right;
-  line-height: 0;
-}
-
-/* Placeholders */
-.placeholder-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border: 2px dashed #b5b5b5;
-  border-radius: 6px;
-  background: #f5f5f5;
-  color: #7a7a7a;
-  font-family: 'Google Sans', sans-serif;
-  font-weight: 600;
-}
-
-.placeholder-box.is-overview {
-  aspect-ratio: 3108 / 876;
-}
-
-.placeholder-box.is-method {
-  aspect-ratio: 2474 / 1474;
-  margin-top: 1rem;
-}
-
-.placeholder-box.is-video {
-  aspect-ratio: 3 / 2;
-}
-
-/* Base vs Ours captions */
-.video-caption.base {
-  color: #6b6b76;
-}
-
-.video-caption.ours {
-  color: #5b3fa0;
-}
-
-.hero .publication-title .method-name {
-  font-variant: small-caps;
-  letter-spacing: 0.01em;
 }
