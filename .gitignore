@@ -1,2 +1,5 @@
 .DS_Store
 .idea
+
+# Raw originals (may contain metadata) - never commit
+_raw/

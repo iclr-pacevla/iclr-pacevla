@@ -7,7 +7,7 @@
   <meta name="keywords" content="Robotics">
   <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>[Paper Title]</title>
+  <title>PaceVLA: Adaptive Temporal Action Quantization in Vision-Language-Action Models</title>
 
   <link rel="stylesheet" href="./static/css/fonts.css">
 
@@ -32,7 +32,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">
-            [Paper Title]
+            <span class="method-name">PaceVLA</span>: Adaptive Temporal Action Quantization in Vision-Language-Action Models
           </h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">Anonymous Authors</span>
@@ -43,7 +43,9 @@
 
           <div class="tldr">
             <p>
-              <strong>TL;DR:</strong> [One-sentence summary of the paper.]
+              <strong>TL;DR:</strong> PaceVLA lets a Vision-Language-Action policy decide, at every inference step,
+              how coarsely and how far ahead to act &mdash; executing tasks faster than the teleoperated demonstrations
+              it was trained on, while maintaining task success.
             </p>
           </div>
         </div>
@@ -68,7 +70,26 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            [Abstract placeholder. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.]
+            Fast and reliable manipulation is crucial for practical robot deployment. Although
+            Vision-Language-Action (VLA) models have recently shown remarkable progress
+            as generalist robot policies, their execution often remains temporally inefficient.
+            A key source of this inefficiency is that policies learn fine-grained temporal patterns
+            from teleoperated demonstrations, requiring many low-level action steps.
+            <em>Temporal action quantization</em> offers a simple way to accelerate execution by
+            aggregating consecutive low-level actions into temporally coarser actions. However,
+            applying action quantization without considering when fine-grained control is required
+            introduces a speed&ndash;accuracy trade-off: accelerated actions may efficiently
+            reduce redundant steps in some phases, while discarding critical motion details
+            in precision-sensitive interactions. To address this, we propose <span class="method-name">PaceVLA</span>,
+            a unified framework for adaptive temporal execution in VLAs that integrates two
+            coupled components: (1) mode-specific action decoders built on a shared action expert,
+            supporting multiple temporal granularities and prediction horizons,
+            (2) a quantizability-guided mode selection scheme which decides whether coarse
+            execution is appropriate, and a context-conditioned router that selects an execution
+            mode at each inference step. Experiments across three multi-task simulation
+            benchmarks and six real-world tasks show that <span class="method-name">PaceVLA</span> improves execution
+            efficiency while maintaining task success rate across multiple embodiments, including
+            long-horizon and dexterous manipulation.
           </p>
         </div>
       </div>
@@ -85,7 +106,20 @@
         <h2 class="title is-3 has-text-centered">Method</h2>
         <div class="content has-text-justified">
           <p>
-            [Method description placeholder. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.]
+            <span class="method-name">PaceVLA</span> equips a shared flow-matching action expert with
+            <strong>mode-specific action decoders</strong>, each corresponding to an execution mode with its own
+            temporal quantization level and prediction horizon. Fine-grained modes reproduce the demonstration's
+            original temporal resolution, while quantized modes aggregate consecutive low-level actions into
+            temporally coarser commands that cover the same motion in fewer steps.
+          </p>
+          <p>
+            At each inference step, a <strong>quantization judge</strong> &mdash; supervised with per-step
+            quantizability scores distilled from task execution outcomes and a large vision-language model &mdash;
+            decides whether the current phase tolerates coarse execution, and a
+            <strong>context-conditioned router</strong> selects an execution mode within the chosen group from the
+            visual and language context. The policy thereby commits to long, coarse actions during free-space
+            motion and falls back to fine-grained, short-horizon control in precision-critical phases such as
+            grasping and contact-rich interaction, adding only marginal inference overhead (1.05&times;).
           </p>
         </div>
         <div class="placeholder-box is-method">Method figure placeholder</div>
@@ -97,37 +131,48 @@
 
 <section class="section" id="results">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Results</h2>
+    <h2 class="title is-3 has-text-centered">Real-Robot Results</h2>
     <p class="results-intro has-text-centered">
-      We present real-robot demonstrations for each task. Click a variant to switch the videos below.
+      Side-by-side rollouts of the base VLA (GR00T N1.5) and GR00T N1.5 + <span class="method-name">PaceVLA</span> (Ours)
+      across three embodiments.
     </p>
 
-    <h3 class="platform-header">Platform I — [Robot Setup]</h3>
+    <h3 class="platform-header">Platform I &mdash; Franka Research 3 + Robotiq Gripper</h3>
 
     <div class="task-card">
       <div class="task-header">
         <span class="task-badge">Task A</span>
-        <span class="task-name">[Task Name]</span>
+        <span class="task-name">Pick-and-Place</span>
       </div>
       <div class="task-instruction">
         <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"[Language instruction for this task.]"</span>
+        <span class="instruction-text" id="pnp-instruction">"Pick up the doll and put it into the plate."</span>
       </div>
       <div class="task-variant">
-        <span class="variant-label">Variant</span>
+        <span class="variant-label">Object</span>
         <div class="variant-options">
-          <button type="button" class="variant-btn is-active">[Variant 1]</button>
-          <button type="button" class="variant-btn">[Variant 2]</button>
+          <button type="button" class="variant-btn is-active"
+                  data-base="./static/videos/franka/pnp_doll_base.mp4"
+                  data-ours="./static/videos/franka/pnp_doll_ours.mp4"
+                  data-instr="&quot;Pick up the doll and put it into the plate.&quot;">Doll</button>
+          <button type="button" class="variant-btn"
+                  data-base="./static/videos/franka/pnp_greencube_base.mp4"
+                  data-ours="./static/videos/franka/pnp_greencube_ours.mp4"
+                  data-instr="&quot;Pick up the green cube and put it into the plate.&quot;">Green Cube</button>
+          <button type="button" class="variant-btn"
+                  data-base="./static/videos/franka/pnp_bluecup_base.mp4"
+                  data-ours="./static/videos/franka/pnp_bluecup_ours.mp4"
+                  data-instr="&quot;Pick up the blue cup and put it into the plate.&quot;">Blue Cup</button>
         </div>
       </div>
       <div class="task-videos">
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption fail">[Baseline] (Failure)</p>
+          <video class="video-base" src="./static/videos/franka/pnp_doll_base.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption base">GR00T N1.5 (Base)</p>
         </div>
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption success">[Baseline] + [Method] (Ours; Success)</p>
+          <video class="video-ours" src="./static/videos/franka/pnp_doll_ours.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
         </div>
       </div>
     </div>
@@ -135,85 +180,87 @@
     <div class="task-card">
       <div class="task-header">
         <span class="task-badge">Task B</span>
-        <span class="task-name">[Task Name]</span>
+        <span class="task-name">Air Fryer (Long-horizon)</span>
       </div>
       <div class="task-instruction">
         <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"[Language instruction for this task.]"</span>
-      </div>
-      <div class="task-variant">
-        <span class="variant-label">Variant</span>
-        <div class="variant-options">
-          <button type="button" class="variant-btn is-active">[Variant 1]</button>
-          <button type="button" class="variant-btn">[Variant 2]</button>
-        </div>
+        <span class="instruction-text">"Open the air fryer basket, put the food from the plate into the basket, and close the basket."</span>
       </div>
       <div class="task-videos">
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption fail">[Baseline] (Failure)</p>
+          <video src="./static/videos/franka/airfryer_base.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption base">GR00T N1.5 (Base)</p>
         </div>
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption success">[Baseline] + [Method] (Ours; Success)</p>
+          <video src="./static/videos/franka/airfryer_ours.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
         </div>
       </div>
     </div>
-
-    <h3 class="platform-header">Platform II — [Robot Setup]</h3>
 
     <div class="task-card">
       <div class="task-header">
         <span class="task-badge">Task C</span>
-        <span class="task-name">[Task Name]</span>
+        <span class="task-name">Stack Cup (Long-horizon)</span>
       </div>
       <div class="task-instruction">
         <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"[Language instruction for this task.]"</span>
-      </div>
-      <div class="task-variant">
-        <span class="variant-label">Variant</span>
-        <div class="variant-options">
-          <button type="button" class="variant-btn is-active">[Variant 1]</button>
-          <button type="button" class="variant-btn">[Variant 2]</button>
-        </div>
+        <span class="instruction-text">"Stack the left blue cup on the yellow cup in the middle, then stack the right blue cup on the yellow cup in the middle."</span>
       </div>
       <div class="task-videos">
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption fail">[Baseline] (Failure)</p>
+          <video src="./static/videos/franka/stackcup_base.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption base">GR00T N1.5 (Base)</p>
         </div>
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption success">[Baseline] + [Method] (Ours; Success)</p>
+          <video src="./static/videos/franka/stackcup_ours.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
         </div>
       </div>
     </div>
 
+    <h3 class="platform-header">Platform II &mdash; Bimanual OpenArm + 6-DoF Dexterous Hands</h3>
+
     <div class="task-card">
       <div class="task-header">
         <span class="task-badge">Task D</span>
-        <span class="task-name">[Task Name]</span>
+        <span class="task-name">Table Sweeping (Bimanual)</span>
       </div>
       <div class="task-instruction">
         <span class="instruction-label">Instruction</span>
-        <span class="instruction-text">"[Language instruction for this task.]"</span>
-      </div>
-      <div class="task-variant">
-        <span class="variant-label">Variant</span>
-        <div class="variant-options">
-          <button type="button" class="variant-btn is-active">[Variant 1]</button>
-          <button type="button" class="variant-btn">[Variant 2]</button>
-        </div>
+        <span class="instruction-text">"Hold the dustpan with the left hand and sweep the debris into it with the brush in the right hand."</span>
       </div>
       <div class="task-videos">
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption fail">[Baseline] (Failure)</p>
+          <video src="./static/videos/openarm/sweep_base.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption base">GR00T N1.5 (Base)</p>
         </div>
         <div class="video-block">
-          <div class="placeholder-box is-video">Video placeholder</div>
-          <p class="video-caption success">[Baseline] + [Method] (Ours; Success)</p>
+          <video src="./static/videos/openarm/sweep_ours.mp4" muted playsinline loop preload="metadata"></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours)</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="platform-header">Platform III &mdash; ALLEX Humanoid + 15-DoF Dexterous Hands</h3>
+
+    <div class="task-card">
+      <div class="task-header">
+        <span class="task-badge">Task E</span>
+        <span class="task-name">Conveyor Package Handling (Long-horizon)</span>
+      </div>
+      <div class="task-instruction">
+        <span class="instruction-label">Instruction</span>
+        <span class="instruction-text">"Bring the package over, orient barcode up, then place it on the conveyor."</span>
+      </div>
+      <div class="task-videos">
+        <div class="video-block">
+          <video src="./static/videos/allex/conveyor_base.mp4" muted playsinline loop preload="metadata" controls></video>
+          <p class="video-caption base">GR00T N1.5 (Base) &mdash; 3.6 packages/min</p>
+        </div>
+        <div class="video-block">
+          <video src="./static/videos/allex/conveyor_ours.mp4" muted playsinline loop preload="metadata" controls></video>
+          <p class="video-caption ours">GR00T N1.5 + PaceVLA (Ours) &mdash; 6.3 packages/min</p>
         </div>
       </div>
     </div>

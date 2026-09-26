@@ -110,9 +110,12 @@ $(document).ready(function() {
         });
         btn.classList.add('is-active');
 
-        var failVideo = card.querySelector('.video-fail');
-        var successVideo = card.querySelector('.video-success');
-        [[failVideo, btn.dataset.fail], [successVideo, btn.dataset.success]].forEach(function(pair) {
+        var instr = card.querySelector('.instruction-text');
+        if (instr && btn.dataset.instr) { instr.textContent = btn.dataset.instr; }
+
+        var baseVideo = card.querySelector('.video-base');
+        var oursVideo = card.querySelector('.video-ours');
+        [[baseVideo, btn.dataset.base], [oursVideo, btn.dataset.ours]].forEach(function(pair) {
           var v = pair[0], src = pair[1];
           if (!v) { return; }
           if (!v || v.getAttribute('src') === src) { playVideo(v); return; }

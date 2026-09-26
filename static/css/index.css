@@ -168,7 +168,7 @@ body {
   font-family: 'Google Sans', sans-serif;
   font-size: 1.45rem;
   font-weight: 700;
-  color: #3f7d7f;
+  color: #5b3fa0;
   letter-spacing: 0.01em;
 }
 
@@ -182,8 +182,8 @@ body {
 .tldr {
   margin-top: 1.25rem;
   padding: 1rem 1.5rem;
-  border-left: 4px solid #5a9b9d;
-  background: #f4f9f9;
+  border-left: 4px solid #7a5fb5;
+  background: #f7f4fc;
   border-radius: 4px;
   text-align: left;
   font-size: 1.05rem;
@@ -191,7 +191,7 @@ body {
 }
 
 .tldr strong {
-  color: #2c5d7a;
+  color: #4a3286;
 }
 
 /* Overview / Method images */
@@ -229,12 +229,12 @@ body {
   font-family: 'Google Sans', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #3f7d7f;
+  color: #5b3fa0;
   text-align: center;
   letter-spacing: 0.02em;
   margin: 0 0 1.75rem;
   padding-bottom: 0.6rem;
-  border-bottom: 2px solid #d3e3e3;
+  border-bottom: 2px solid #e4dcf3;
 }
 
 .task-card + .platform-header {
@@ -246,7 +246,7 @@ body {
 }
 
 .task-header {
-  background: #5a9b9d;
+  background: #7a5fb5;
   color: white;
   padding: 0.85rem 1.25rem;
   border-radius: 10px;
@@ -255,7 +255,7 @@ body {
   gap: 0.85rem;
   font-family: 'Google Sans', sans-serif;
   margin-bottom: 0.65rem;
-  border-left: 5px solid #3f7d7f;
+  border-left: 5px solid #5b3fa0;
 }
 
 .task-badge {
@@ -273,19 +273,19 @@ body {
 }
 
 .task-instruction {
-  background: #e8f0f7;
+  background: #efe9f9;
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 0.85rem;
   margin-bottom: 0.65rem;
-  border-left: 5px solid #6e9bbf;
+  border-left: 5px solid #9a7fd1;
 }
 
 .instruction-label {
-  background: #cfe0ec;
-  color: #2c5d7a;
+  background: #ded2f0;
+  color: #4a3286;
   padding: 0.2rem 0.75rem;
   border-radius: 5px;
   font-weight: 700;
@@ -295,23 +295,23 @@ body {
 }
 
 .instruction-text {
-  color: #2c5d7a;
+  color: #4a3286;
   font-weight: 700;
 }
 
 .task-variant {
-  background: #f0f5e8;
+  background: #f6f2fb;
   padding: 0.75rem 1.1rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  border: 1px solid #d8e3c2;
+  border: 1px solid #ded3ef;
   margin-bottom: 1rem;
 }
 
 .variant-label {
-  color: #4a6b2a;
+  color: #5b3fa0;
   font-weight: 700;
   font-family: 'Google Sans', sans-serif;
   white-space: nowrap;
@@ -325,10 +325,10 @@ body {
 
 .variant-btn {
   padding: 0.35rem 0.9rem;
-  border: 1px solid #c3d3a8;
+  border: 1px solid #c9b8e8;
   border-radius: 999px;
   background: white;
-  color: #4a6b2a;
+  color: #5b3fa0;
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 700;
@@ -338,13 +338,13 @@ body {
 }
 
 .variant-btn:hover {
-  background: #e3edd3;
-  border-color: #8aa860;
+  background: #e9e0f7;
+  border-color: #9a7fd1;
 }
 
 .variant-btn.is-active {
-  background: #4a6b2a;
-  border-color: #4a6b2a;
+  background: #5b3fa0;
+  border-color: #5b3fa0;
   color: white;
 }
 
@@ -353,7 +353,7 @@ body {
 }
 
 .variant-btn:focus-visible {
-  box-shadow: 0 0 0 3px rgba(74, 107, 42, 0.28);
+  box-shadow: 0 0 0 3px rgba(91, 63, 160, 0.28);
 }
 
 .task-videos {
@@ -434,4 +434,18 @@ body {
 
 .placeholder-box.is-video {
   aspect-ratio: 3 / 2;
+}
+
+/* Base vs Ours captions */
+.video-caption.base {
+  color: #6b6b76;
+}
+
+.video-caption.ours {
+  color: #5b3fa0;
+}
+
+.hero .publication-title .method-name {
+  font-variant: small-caps;
+  letter-spacing: 0.01em;
 }
